@@ -368,11 +368,7 @@ function handleClick() {
 
 	clickCount++;
 	pityCounter++;
-	
-	// Progressive scale: 5% larger per click (scale = 1 + clickCount * 0.05)
-	const newScale = 1 + clickCount * 0.05;
-	star.style.transform = `scale(${newScale})`;
-	star.style.transition = "transform 300ms ease-out";
+
 	
 	setTimeout(() => {
 		star.style.transition = "";
