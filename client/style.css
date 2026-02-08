@@ -42,6 +42,181 @@ h1 {
   text-align: center;
 }
 
+/* Simulator layout */
+.sim-layout {
+  display: grid;
+  grid-template-columns: 1fr 2fr 320px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.panel {
+  background: rgba(255,255,255,0.03);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+  color: inherit;
+}
+
+.sim-canvas {
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+}
+
+/* Star drop scene */
+.star-drop {
+  width: 200px;
+  height: 200px;
+  cursor: pointer;
+  filter: drop-shadow(0 10px 30px rgba(0,0,0,0.45));
+}
+.star-drop:active { transform: scale(0.98); }
+
+/* Spin animation on click */
+@keyframes spin {
+  0% { transform: rotateZ(0deg); }
+  100% { transform: rotateZ(360deg); }
+}
+
+/* Pulse effect when ready to open */
+@keyframes pulseReady {
+  0%, 100% { filter: drop-shadow(0 10px 30px rgba(0,0,0,0.45)) drop-shadow(0 0 20px rgba(255, 215, 102, 0.4)); }
+  50% { filter: drop-shadow(0 10px 30px rgba(0,0,0,0.45)) drop-shadow(0 0 40px rgba(255, 215, 102, 0.8)); }
+}
+
+/* Opening sequence: zoom out then zoom in */
+@keyframes openingSequence {
+  0% { transform: scale(1) rotateZ(0deg); }
+  40% { transform: scale(1.4) rotateZ(180deg); }
+  100% { transform: scale(1) rotateZ(360deg); }
+}
+
+/* Ready text styling */
+.ready-text {
+  position: absolute;
+  font-size: 28px;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.6), 0 0 15px rgba(255, 215, 102, 0.8);
+  animation: bounce 600ms ease-in-out infinite;
+  letter-spacing: 3px;
+  font-family: 'Arial Black', sans-serif;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+/* Progress circles */
+.progress-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,0.2);
+  transition: all 300ms ease;
+}
+
+/* Light overlay for opening effect */
+.light-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.8), transparent);
+  display: none;
+  z-index: 998;
+  pointer-events: none;
+}
+
+/* Reward overlay */
+.reward-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+.reward-panel {
+     padding: 3rem 2rem;
+     border-radius: 16px;
+     text-align: center;
+     box-shadow: 0 30px 60px rgba(0,0,0,0.7);
+     transform: scale(1);
+     opacity: 0;
+     animation: popIn 400ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+   
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     gap: 1rem;
+   
+     /* allow panel to shrink/expand based on content */
+     height: auto;
+     justify-content: center; /* optional, centers everything nicely */
+   }
+   
+   .reward-image {
+     max-width: 50%;   /* scale image to panel width */
+     height: auto;      /* keep aspect ratio */
+     object-fit: contain;
+   }
+.reward-title {
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.reward-character {
+  font-size: 50px;
+  font-weight: 900;
+}
+.reward-hint {
+  font-size: 12px;
+  opacity: 1;
+  margin-top: 0.5rem;
+}
+
+@keyframes popIn { to { transform: scale(1); opacity: 1; } }
+
+.controls { text-align: left; }
+
+.controls .row { margin-bottom: 0.6rem; }
+
+.cards { display: flex; gap: 0.8rem; align-items: center; justify-content: center; }
+
+.card {
+  width: 120px;
+  height: 160px;
+  perspective: 800px;
+}
+.card-inner {
+  width: 100%; height: 100%;
+  position: relative; transform-style: preserve-3d; transition: transform 600ms cubic-bezier(.2,.8,.2,1);
+}
+.card.flip .card-inner { transform: rotateY(180deg); }
+.card-face { position: absolute; inset: 0; border-radius: 8px; overflow: hidden; display:flex; align-items:center; justify-content:center; }
+.card-front { background: linear-gradient(180deg,#333,#222); border: 1px solid rgba(255,255,255,0.04); }
+.card-back { transform: rotateY(180deg); background: #fafafa; color: #111; }
+.rarity-glow { box-shadow: 0 0 24px rgba(255,255,255,0.04) inset; }
+.rarity-legendary { box-shadow: 0 0 18px 4px rgba(255,200,50,0.28); }
+.rarity-mythic { box-shadow: 0 0 14px 3px rgba(180,100,255,0.22); }
+.rarity-epic { box-shadow: 0 0 12px 2px rgba(120,90,255,0.18); }
+.rarity-super_rare { box-shadow: 0 0 10px 2px rgba(80,175,255,0.14); }
+.rarity-rare { box-shadow: 0 0 8px 1px rgba(100,220,150,0.12); }
+.rarity-common { box-shadow: 0 0 6px 1px rgba(255,255,255,0.04); }
+
+.results { margin-top: 1rem; display:flex; gap:0.6rem; flex-wrap:wrap; justify-content:center; }
+.result-item { width:64px; height:64px; border-radius:8px; overflow:hidden; display:flex; align-items:center; justify-content:center; background:#111; }
+
+@media (max-width: 900px) {
+  .sim-layout { grid-template-columns: 1fr; }
+  .controls { order: 3; }
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
@@ -85,4 +260,19 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* Prevent selection and dragging of UI elements */
+*, *::before, *::after {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+img, svg {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
 }

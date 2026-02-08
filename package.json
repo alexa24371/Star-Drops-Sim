@@ -1,0 +1,12 @@
+{
+  "name": "star-drops-sim",
+  "version": "0.0.1",
+  "description": "Discord Activity: Star Drops Simulator",
+  "scripts": {
+    "dev": "node start-all.js",
+    "tunnel": "node scripts/start_tunnel.js"
+  },
+  "engines": {
+    "node": ">=14"
+  }
+}
